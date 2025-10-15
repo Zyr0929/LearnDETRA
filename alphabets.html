@@ -7,7 +7,7 @@
     <title>DETRA Alphabets Sign Language</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* General Styles (Copy/Paste from Homepage for consistency) */
+        /* General Styles */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -16,6 +16,7 @@
             color: #333;
         }
 
+        /* Header Layout */
         .header {
             background-color: #e0e3e7;
             color: white;
@@ -23,32 +24,49 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
         }
-
-        .header-left,
-        .header-right {
-            display: flex;
-            align-items: center;
-        }
-
-        /* --- STYLES FOR THE MOVED SEARCH BAR CONTAINER --- */
-        /* Note: .header-center is now a general-purpose wrapper */
-        .search-container { 
-            text-align: center; 
-            margin: 20px auto; /* Center and add vertical spacing */
-            max-width: 500px; /* Optional: limit width for better appearance */
-        }
-        /* ------------------------------------------------ */
 
         .header-left {
+            display: flex;
+            align-items: center;
             min-width: 150px;
         }
 
+        /* Burger Menu Icon (Hidden on Desktop) */
+        .menu-toggle {
+            display: none; /* Hidden by default */
+            font-size: 24px;
+            color: #49484d;
+            cursor: pointer;
+        }
+
+        /* Navigation Links Container (Desktop Styles) */
         .header-right {
+            display: flex;
+            align-items: center;
             min-width: 300px;
             justify-content: flex-end;
         }
+
+        .header nav a {
+            color: #49484d;
+            text-decoration: none;
+            font-size: 16px;
+            /* Styles for the separator lines */
+            padding: 0 10px;
+            border-left: 1px solid #49484d; /* Vertical separator */
+            transition: color 0.2s;
+        }
+
+        .header nav a:first-child {
+            border-left: none; /* Remove border from the first link */
+        }
+        
+        .header nav a:hover {
+            color: #817c7c;
+        }
+        /* --- End of Navigation Links --- */
+
 
         /* Home Icon Styling */
         .home-icon {
@@ -71,15 +89,13 @@
             text-decoration: none;
         }
 
-        /* Navigation Styling */
-        .header nav a {
-            color: #49484d;
-            text-decoration: none;
-            margin-left: 20px;
-            font-size: 16px;
-        }
-
         /* Search Bar Styling */
+        .search-container {
+            text-align: center;
+            margin: 20px auto;
+            max-width: 500px;
+        }
+        
         #search-input {
             padding: 8px 15px;
             border: 1px solid #ccc;
@@ -106,7 +122,7 @@
         .content-section h1 {
             font-size: 3em;
             color: #2c3e50;
-            margin-bottom: 10px; /* Reduced margin to bring search bar closer */
+            margin-bottom: 10px;
         }
 
         .alphabet-grid {
@@ -126,12 +142,11 @@
             display: block;
             color: #49484d;
             font-size: 24px;
-            margin-right: 10px;
             text-decoration: none;
             transition: color 0.2s;
         }
 
-        /* Image CSS (Keeping the same) */
+        /* Image CSS (Keeping the same) - omitted for brevity */
         #sign-a { background-image: url('images/A.png'); }
         #sign-b { background-image: url('images/B.png'); }
         #sign-c { background-image: url('images/C.png'); }
@@ -169,7 +184,7 @@
             border-radius: 8px;
             border: 1px solid #ddd;
         }
-
+        
         /* Fallback for older browsers that don't support aspect-ratio */
         @supports not (aspect-ratio: 1 / 1) {
             .sign-image {
@@ -193,14 +208,61 @@
             margin: 0 10px;
         }
 
+        /* ======================================= */
+        /* MOBILE / BURGER MENU SPECIFIC STYLES */
+        /* ======================================= */
         @media (max-width: 768px) {
-            /* These header rules are no longer needed for the search bar as it's moved out of the header */
-            .header-center { /* Deleted from old code, but keeping the other media queries clean */ }
+            
+            /* Show the Burger Icon */
+            .menu-toggle {
+                display: block;
+            }
 
+            /* Hide the navigation links by default on mobile */
             .header-right {
-                min-width: auto;
-                justify-content: center;
-                /* If you want the nav to be centered on small screens */
+                display: none; 
+                position: absolute;
+                top: 60px; /* Position below the header */
+                right: 0; /* Align to the right */
+                width: 100%;
+                background-color: #d1d4d8;
+                box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+                z-index: 100;
+                flex-direction: column; /* Stack links vertically */
+                min-width: 100%;
+                padding: 0; /* Remove padding here */
+            }
+
+            /* Class added by JavaScript to SHOW the menu */
+            .header-right.active {
+                display: flex;
+            }
+
+            .header nav {
+                width: 100%; 
+            }
+
+            .header nav a {
+                border-left: none; /* Remove vertical separators */
+                border-bottom: 1px solid #49484d33; /* Use a subtle horizontal separator */
+                padding: 10px 20px;
+                margin: 0;
+                width: 100%;
+                box-sizing: border-box;
+                text-align: left;
+            }
+            
+            .header nav a:last-child {
+                border-bottom: none;
+            }
+
+            /* Ensure header items stay on one line (Logo + Icon) */
+            .header {
+                flex-wrap: nowrap;
+            }
+            
+            .alphabet-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             }
         }
     </style>
@@ -216,7 +278,11 @@
             <a href="index.html" class="logo">DETRA</a>
         </div>
 
-        <div class="header-right">
+        <div class="menu-toggle" id="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <div class="header-right" id="main-nav-container">
             <nav>
                 <a href="https://detrafinal.flutterflow.app/">Homepage</a>
                 <a href="https://kejds.github.io/DETRA_SIGN/">Sign to Word</a>
@@ -359,33 +425,45 @@
     </footer>
 
     <script>
+        // Existing filterAlphabet function (unmodified)
         function filterAlphabet() {
-            // Get the search input value and convert to uppercase for matching
             let input = document.getElementById('search-input');
             let filter = input.value.toUpperCase();
-
-            // Get all the alphabet sign cards
             let grid = document.getElementById('alphabet-grid');
             let cards = grid.getElementsByClassName('sign-card');
 
-            // Limit the input to one character
             if (filter.length > 1) {
                 filter = filter.substring(0, 1);
                 input.value = filter;
             }
 
-            // Loop through all cards and hide those that don't match the filter
             for (let i = 0; i < cards.length; i++) {
                 let card = cards[i];
                 let letter = card.getAttribute('data-letter');
 
                 if (filter === "" || letter === filter) {
-                    // Show the card (or show all if search is empty)
                     card.style.display = 'block';
                 } else {
-                    // Hide the card
                     card.style.display = 'none';
                 }
+            }
+        }
+        
+        // JAVASCRIPT FOR BURGER TOGGLE
+        document.getElementById('menu-toggle').onclick = function() {
+            const navContainer = document.getElementById('main-nav-container');
+            const icon = this.querySelector('i');
+
+            // Toggle the 'active' class on the header-right container
+            navContainer.classList.toggle('active');
+            
+            // Toggle the icon between bars (burger) and times (close)
+            if (navContainer.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
             }
         }
     </script>
