@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DETRA Alphabets Sign Language</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General Styles (Copy/Paste from Homepage for consistency) */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .header {
+            background-color: #e0e3e7;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .header-left,
+        .header-right {
+            display: flex;
+            align-items: center;
+        }
+
+        /* --- STYLES FOR THE MOVED SEARCH BAR CONTAINER --- */
+        /* Note: .header-center is now a general-purpose wrapper */
+        .search-container { 
+            text-align: center; 
+            margin: 20px auto; /* Center and add vertical spacing */
+            max-width: 500px; /* Optional: limit width for better appearance */
+        }
+        /* ------------------------------------------------ */
+
+        .header-left {
+            min-width: 150px;
+        }
+
+        .header-right {
+            min-width: 300px;
+            justify-content: flex-end;
+        }
+
+        /* Home Icon Styling */
+        .home-icon {
+            color: #49484d;
+            font-size: 24px;
+            margin-right: 10px;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .home-icon:hover {
+            color: #817c7c;
+        }
+
+        /* Logo Styling */
+        .header .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #49484d;
+            text-decoration: none;
+        }
+
+        /* Navigation Styling */
+        .header nav a {
+            color: #49484d;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 16px;
+        }
+
+        /* Search Bar Styling */
+        #search-input {
+            padding: 8px 15px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            font-size: 16px;
+            width: 80%;
+            max-width: 400px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        #search-input:focus {
+            border-color: #817c7c;
+        }
+
+        /* Content and Grid Styles */
+        .content-section {
+            padding: 60px 20px;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .content-section h1 {
+            font-size: 3em;
+            color: #2c3e50;
+            margin-bottom: 10px; /* Reduced margin to bring search bar closer */
+        }
+
+        .alphabet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .sign-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            padding: 15px;
+            transition: transform 0.2s;
+            overflow: hidden;
+            display: block;
+            color: #49484d;
+            font-size: 24px;
+            margin-right: 10px;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        /* Image CSS (Keeping the same) */
+        #sign-a { background-image: url('images/A.png'); }
+        #sign-b { background-image: url('images/B.png'); }
+        #sign-c { background-image: url('images/C.png'); }
+        #sign-d { background-image: url('images/D.png'); }
+        #sign-e { background-image: url('images/E.png'); }
+        #sign-f { background-image: url('images/F.png'); }
+        #sign-g { background-image: url('images/G.png'); }
+        #sign-h { background-image: url('images/H.png'); }
+        #sign-i { background-image: url('images/I.png'); }
+        #sign-j { background-image: url('images/J.png'); }
+        #sign-k { background-image: url('images/K.png'); }
+        #sign-l { background-image: url('images/L.png'); }
+        #sign-m { background-image: url('images/M.png'); }
+        #sign-n { background-image: url('images/N.png'); }
+        #sign-o { background-image: url('images/O.png'); }
+        #sign-p { background-image: url('images/P.png'); }
+        #sign-q { background-image: url('images/Q.png'); }
+        #sign-r { background-image: url('images/R.png'); }
+        #sign-s { background-image: url('images/S.png'); }
+        #sign-t { background-image: url('images/T.png'); }
+        #sign-u { background-image: url('images/U.png'); }
+        #sign-v { background-image: url('images/V.png'); }
+        #sign-w { background-image: url('images/W.png'); }
+        #sign-x { background-image: url('images/X.png'); }
+        #sign-y { background-image: url('images/Y.png'); }
+        #sign-z { background-image: url('images/Z.png'); }
+
+        .sign-image {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        /* Fallback for older browsers that don't support aspect-ratio */
+        @supports not (aspect-ratio: 1 / 1) {
+            .sign-image {
+                height: 0;
+                padding-bottom: 100%;
+            }
+        }
+
+        .footer {
+            background-color: #e0e3e7;
+            color: #49484d;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            font-size: 0.9em;
+        }
+
+        .footer nav a {
+            color: #49484d;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        @media (max-width: 768px) {
+            /* These header rules are no longer needed for the search bar as it's moved out of the header */
+            .header-center { /* Deleted from old code, but keeping the other media queries clean */ }
+
+            .header-right {
+                min-width: auto;
+                justify-content: center;
+                /* If you want the nav to be centered on small screens */
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="header-left">
+            <a href="index.html" class="home-icon" title="Go to Homepage">
+                <i class="fas fa-home"></i>
+            </a>
+            <a href="index.html" class="logo">DETRA</a>
+        </div>
+
+        <div class="header-right">
+            <nav>
+                <a href="https://detrafinal.flutterflow.app/">Homepage</a>
+                <a href="https://kejds.github.io/DETRA_SIGN/">Sign to Word</a>
+                <a href="https://zaewei.github.io/hackathonalphabet.github.io/">Sign to Alphabet</a>
+                <a href="https://zaewei.github.io/communitydetrapage/">Community</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="content-section">
+            <h1>The ASL Manual Alphabet (Fingerspelling)</h1>
+
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Search for a letter (A-Z)" maxlength="1"
+                    onkeyup="filterAlphabet()">
+            </div>
+            <p style="font-size: 1.1em; max-width: 800px; margin: 0 auto 40px;">
+                Fingerspelling is used for names, places, and words without an established sign. Practice all 26 letters
+                below!
+            </p>
+
+            <div class="alphabet-grid" id="alphabet-grid">
+                <div class="sign-card" data-letter="A">
+                    <div id="sign-a" class="sign-image" role="img" aria-label="ASL sign for the letter A"></div>
+                    <p class="sign-letter">A</p>
+                </div>
+                <div class="sign-card" data-letter="B">
+                    <div id="sign-b" class="sign-image" role="img" aria-label="ASL sign for the letter B"></div>
+                    <p class="sign-letter">B</p>
+                </div>
+                <div class="sign-card" data-letter="C">
+                    <div id="sign-c" class="sign-image" role="img" aria-label="ASL sign for the letter C"></div>
+                    <p class="sign-letter">C</p>
+                </div>
+                <div class="sign-card" data-letter="D">
+                    <div id="sign-d" class="sign-image" role="img" aria-label="ASL sign for the letter D"></div>
+                    <p class="sign-letter">D</p>
+                </div>
+                <div class="sign-card" data-letter="E">
+                    <div id="sign-e" class="sign-image" role="img" aria-label="ASL sign for the letter E"></div>
+                    <p class="sign-letter">E</p>
+                </div>
+                <div class="sign-card" data-letter="F">
+                    <div id="sign-f" class="sign-image" role="img" aria-label="ASL sign for the letter F"></div>
+                    <p class="sign-letter">F</p>
+                </div>
+                <div class="sign-card" data-letter="G">
+                    <div id="sign-g" class="sign-image" role="img" aria-label="ASL sign for the letter G"></div>
+                    <p class="sign-letter">G</p>
+                </div>
+                <div class="sign-card" data-letter="H">
+                    <div id="sign-h" class="sign-image" role="img" aria-label="ASL sign for the letter H"></div>
+                    <p class="sign-letter">H</p>
+                </div>
+                <div class="sign-card" data-letter="I">
+                    <div id="sign-i" class="sign-image" role="img" aria-label="ASL sign for the letter I"></div>
+                    <p class="sign-letter">I</p>
+                </div>
+                <div class="sign-card" data-letter="J">
+                    <div id="sign-j" class="sign-image" role="img" aria-label="ASL sign for the letter J"></div>
+                    <p class="sign-letter">J</p>
+                </div>
+                <div class="sign-card" data-letter="K">
+                    <div id="sign-k" class="sign-image" role="img" aria-label="ASL sign for the letter K"></div>
+                    <p class="sign-letter">K</p>
+                </div>
+                <div class="sign-card" data-letter="L">
+                    <div id="sign-l" class="sign-image" role="img" aria-label="ASL sign for the letter L"></div>
+                    <p class="sign-letter">L</p>
+                </div>
+                <div class="sign-card" data-letter="M">
+                    <div id="sign-m" class="sign-image" role="img" aria-label="ASL sign for the letter M"></div>
+                    <p class="sign-letter">M</p>
+                </div>
+                <div class="sign-card" data-letter="N">
+                    <div id="sign-n" class="sign-image" role="img" aria-label="ASL sign for the letter N"></div>
+                    <p class="sign-letter">N</p>
+                </div>
+                <div class="sign-card" data-letter="O">
+                    <div id="sign-o" class="sign-image" role="img" aria-label="ASL sign for the letter O"></div>
+                    <p class="sign-letter">O</p>
+                </div>
+                <div class="sign-card" data-letter="P">
+                    <div id="sign-p" class="sign-image" role="img" aria-label="ASL sign for the letter P"></div>
+                    <p class="sign-letter">P</p>
+                </div>
+                <div class="sign-card" data-letter="Q">
+                    <div id="sign-q" class="sign-image" role="img" aria-label="ASL sign for the letter Q"></div>
+                    <p class="sign-letter">Q</p>
+                </div>
+                <div class="sign-card" data-letter="R">
+                    <div id="sign-r" class="sign-image" role="img" aria-label="ASL sign for the letter R"></div>
+                    <p class="sign-letter">R</p>
+                </div>
+                <div class="sign-card" data-letter="S">
+                    <div id="sign-s" class="sign-image" role="img" aria-label="ASL sign for the letter S"></div>
+                    <p class="sign-letter">S</p>
+                </div>
+                <div class="sign-card" data-letter="T">
+                    <div id="sign-t" class="sign-image" role="img" aria-label="ASL sign for the letter T"></div>
+                    <p class="sign-letter">T</p>
+                </div>
+                <div class="sign-card" data-letter="U">
+                    <div id="sign-u" class="sign-image" role="img" aria-label="ASL sign for the letter U"></div>
+                    <p class="sign-letter">U</p>
+                </div>
+                <div class="sign-card" data-letter="V">
+                    <div id="sign-v" class="sign-image" role="img" aria-label="ASL sign for the letter V"></div>
+                    <p class="sign-letter">V</p>
+                </div>
+                <div class="sign-card" data-letter="W">
+                    <div id="sign-w" class="sign-image" role="img" aria-label="ASL sign for the letter W"></div>
+                    <p class="sign-letter">W</p>
+                </div>
+                <div class="sign-card" data-letter="X">
+                    <div id="sign-x" class="sign-image" role="img" aria-label="ASL sign for the letter X"></div>
+                    <p class="sign-letter">X</p>
+                </div>
+                <div class="sign-card" data-letter="Y">
+                    <div id="sign-y" class="sign-image" role="img" aria-label="ASL sign for the letter Y"></div>
+                    <p class="sign-letter">Y</p>
+                </div>
+                <div class="sign-card" data-letter="Z">
+                    <div id="sign-z" class="sign-image" role="img" aria-label="ASL sign for the letter Z"></div>
+                    <p class="sign-letter">Z</p>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 DETRA. All rights reserved.</p>
+        <nav>
+            <a href="#">Privacy Policy</a> |
+            <a href="#">Terms of Service</a> |
+            <a href="#">Contact Us</a>
+        </nav>
+    </footer>
+
+    <script>
+        function filterAlphabet() {
+            // Get the search input value and convert to uppercase for matching
+            let input = document.getElementById('search-input');
+            let filter = input.value.toUpperCase();
+
+            // Get all the alphabet sign cards
+            let grid = document.getElementById('alphabet-grid');
+            let cards = grid.getElementsByClassName('sign-card');
+
+            // Limit the input to one character
+            if (filter.length > 1) {
+                filter = filter.substring(0, 1);
+                input.value = filter;
+            }
+
+            // Loop through all cards and hide those that don't match the filter
+            for (let i = 0; i < cards.length; i++) {
+                let card = cards[i];
+                let letter = card.getAttribute('data-letter');
+
+                if (filter === "" || letter === filter) {
+                    // Show the card (or show all if search is empty)
+                    card.style.display = 'block';
+                } else {
+                    // Hide the card
+                    card.style.display = 'none';
+                }
+            }
+        }
+    </script>
+
+</body>
+
+</html>
