@@ -32,13 +32,7 @@
             min-width: 150px;
         }
 
-        /* Burger Menu Icon (Hidden on Desktop) */
-        .menu-toggle {
-            display: none; /* Hidden by default */
-            font-size: 24px;
-            color: #49484d;
-            cursor: pointer;
-        }
+
 
         /* Navigation Links Container (Desktop Styles) */
         .header-right {
@@ -211,40 +205,38 @@
         /* ======================================= */
         /* MOBILE / BURGER MENU SPECIFIC STYLES */
         /* ======================================= */
-        @media (max-width: 768px) {
-            
-            /* Show the Burger Icon */
-            .menu-toggle {
-                display: block;
+         @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            .hero p {
+                font-size: 1.2em;
             }
 
-            /* Hide the navigation links by default on mobile */
-            .header-right {
+            /* Show the Burger Icon and hide Nav by default */
+            
+            .header nav {
+                /* Initially hide the menu and style it for a dropdown look */
                 display: none; 
-                position: absolute;
-                top: 60px; /* Position below the header */
-                right: 0; /* Align to the right */
-                width: 100%;
-                background-color: #d1d4d8;
+                width: 100%; /* Take full width */
+                background-color: #d1d4d8; /* Light background for the dropdown */
+                position: absolute; /* Position relative to the header */
+                top: 60px; /* Position it right below the header */
+                left: 0;
+                padding: 10px 0;
                 box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
                 z-index: 100;
-                flex-direction: column; /* Stack links vertically */
-                min-width: 100%;
-                padding: 0; /* Remove padding here */
             }
-
-            /* Class added by JavaScript to SHOW the menu */
-            .header-right.active {
+            
+            /* Class added by JavaScript to show the menu */
+            .header nav.active {
                 display: flex;
-            }
-
-            .header nav {
-                width: 100%; 
+                flex-direction: column; /* Stack links vertically */
             }
 
             .header nav a {
                 border-left: none; /* Remove vertical separators */
-                border-bottom: 1px solid #49484d33; /* Use a subtle horizontal separator */
+                border-bottom: 1px solid #49484d33; /* Use a horizontal separator */
                 padding: 10px 20px;
                 margin: 0;
                 width: 100%;
@@ -255,14 +247,14 @@
             .header nav a:last-child {
                 border-bottom: none;
             }
-
-            /* Ensure header items stay on one line (Logo + Icon) */
+            
+            /* Header adjustments for proper spacing */
             .header {
-                flex-wrap: nowrap;
+                flex-direction: row; /* Keep logo and icon on one line */
             }
             
-            .alphabet-grid {
-                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            .button-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -278,18 +270,8 @@
             <a href="index.html" class="logo">DETRA</a>
         </div>
 
-        <div class="menu-toggle" id="menu-toggle">
-            <i class="fas fa-bars"></i>
-        </div>
 
-        <div class="header-right" id="main-nav-container">
-            <nav>
-                <a href="https://detrafinal.flutterflow.app/">Homepage</a>
-                <a href="https://kejds.github.io/DETRA_SIGN/">Sign to Word</a>
-                <a href="https://zaewei.github.io/hackathonalphabet.github.io/">Sign to Alphabet</a>
-                <a href="https://zaewei.github.io/communitydetrapage/">Community</a>
-            </nav>
-        </div>
+
     </header>
 
     <main>
@@ -449,23 +431,7 @@
             }
         }
         
-        // JAVASCRIPT FOR BURGER TOGGLE
-        document.getElementById('menu-toggle').onclick = function() {
-            const navContainer = document.getElementById('main-nav-container');
-            const icon = this.querySelector('i');
 
-            // Toggle the 'active' class on the header-right container
-            navContainer.classList.toggle('active');
-            
-            // Toggle the icon between bars (burger) and times (close)
-            if (navContainer.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
-        }
     </script>
 
 </body>

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DETRA - ASL Alphabet & Words Quiz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Base Styles */
         body {
@@ -15,6 +16,9 @@
             color: #333;
         }
 
+        /* ======================================= */
+        /* HEADER & NAVIGATION STYLES */
+        /* ======================================= */
         .header {
             background-color: #e0e3e7;
             color: white;
@@ -24,6 +28,12 @@
             align-items: center;
         }
 
+        .header-left {
+            display: flex;
+            align-items: center;
+            min-width: 150px;
+        }
+
         .header .logo {
             font-size: 28px;
             font-weight: bold;
@@ -31,12 +41,54 @@
             text-decoration: none;
         }
 
+        /* Home Icon Styling */
+        .home-icon {
+            color: #49484d;
+            font-size: 24px;
+            margin-right: 10px;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .home-icon:hover {
+            color: #817c7c;
+        }
+
+
+
+        /* Navigation Links Container (Desktop Styles) */
+        .header-right {
+            display: flex;
+            align-items: center;
+            min-width: 300px;
+            justify-content: flex-end;
+        }
+        
+        /* Make the nav itself a flex container to hold the links */
+        .header nav {
+            display: flex; /* Ensures links sit side-by-side on desktop */
+        }
+
         .header nav a {
             color: #49484d;
             text-decoration: none;
-            margin-left: 20px;
             font-size: 16px;
+            /* Styles for the separator lines */
+            padding: 0 10px;
+            border-left: 1px solid #49484d; /* Vertical separator line */
+            transition: color 0.2s;
+            white-space: nowrap; /* Prevent wrapping */
         }
+
+        .header nav a:first-child {
+            border-left: none; /* Remove border from the first link */
+        }
+
+        .header nav a:hover {
+            color: #817c7c;
+        }
+        /* --- END OF HEADER STYLES --- */
+
 
         /* --- Quiz Specific Styles --- */
         .content-section {
@@ -52,7 +104,6 @@
             margin-bottom: 40px;
         }
 
-        /* Image Container */
         #image-container {
             width: 100%;
             max-width: 400px;
@@ -75,21 +126,18 @@
             display: none;
         }
 
-        /* Options Container */
         #options-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
             margin: 0 auto 25px auto;
             max-width: 600px;
-            pointer-events: auto; 
+            pointer-events: auto;
         }
 
-        /* Class to disable pointer events when options are hidden/cleared */
         #options-container.options-inactive {
             pointer-events: none;
-            /* Use absolute positioning and off-screen move to guarantee it's out of the way */
-            position: absolute; 
+            position: absolute;
             top: -9999px;
             left: -9999px;
         }
@@ -105,7 +153,7 @@
             transition: background-color 0.2s, transform 0.1s;
             text-align: center;
             font-weight: bold;
-            width: 100%; 
+            width: 100%;
         }
 
         .option-button:hover {
@@ -113,7 +161,6 @@
             transform: translateY(-2px);
         }
 
-        /* Feedback Colors */
         .option-button.correct {
             background-color: #2ecc71;
             color: white;
@@ -131,18 +178,17 @@
             cursor: default;
         }
 
-        /* Next, Start, and Reload Buttons (Unified Size/Pos) */
         #next-button, #start-button, #reload-button {
             margin: 15px auto;
             width: 100%;
             max-width: 300px;
-            display: block; 
-            position: relative; 
-            z-index: 10; /* Ensure visibility */
+            display: block;
+            position: relative;
+            z-index: 10;
             font-weight: bold;
             border-radius: 8px;
         }
-        
+
         #next-button {
             background-color: #49484d;
             color: white;
@@ -155,7 +201,6 @@
             background-color: #333235;
         }
 
-        /* Dedicated Reload Button Style */
         #reload-button {
             background-color: #2c3e50;
             color: white;
@@ -164,27 +209,25 @@
             border: none;
             cursor: pointer;
         }
-        
+
         #reload-button:hover {
             background-color: #1a242c;
         }
 
-        /* Score and Status */
         #score-status {
             font-size: 1.2em;
             font-weight: bold;
             margin-bottom: 15px;
             color: #49484d;
         }
-        
+
         #statusDiv {
-             font-size: 1.1em;
-             font-weight: bold;
-             margin-bottom: 15px;
-             color: #2c3e50;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2c3e50;
         }
 
-        /* Footer and Header from template */
         .footer {
             background-color: #e0e3e7;
             color: #49484d;
@@ -194,36 +237,78 @@
             font-size: 0.9em;
         }
 
-        /* Media queries... */
-        @media (max-width: 600px) {
-            #options-container {
-                grid-template-columns: 1fr;
-                max-width: 90%;
+        /* ======================================= */
+        /* MOBILE / BURGER MENU SPECIFIC STYLES */
+        /* ======================================= */
+         @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            .hero p {
+                font-size: 1.2em;
             }
 
-            #image-container {
-                width: 100%;
-                height: 300px;
+            /* Show the Burger Icon and hide Nav by default */
+
+            
+            .header nav {
+                /* Initially hide the menu and style it for a dropdown look */
+                display: none; 
+                width: 100%; /* Take full width */
+                background-color: #d1d4d8; /* Light background for the dropdown */
+                position: absolute; /* Position relative to the header */
+                top: 60px; /* Position it right below the header */
+                left: 0;
+                padding: 10px 0;
+                box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+                z-index: 100;
             }
             
-            #next-button, #start-button, #reload-button {
-                max-width: 90%;
+            /* Class added by JavaScript to show the menu */
+            .header nav.active {
+                display: flex;
+                flex-direction: column; /* Stack links vertically */
+            }
+
+            .header nav a {
+                border-left: none; /* Remove vertical separators */
+                border-bottom: 1px solid #49484d33; /* Use a horizontal separator */
+                padding: 10px 20px;
+                margin: 0;
+                width: 100%;
+                box-sizing: border-box;
+                text-align: left;
+            }
+            
+            .header nav a:last-child {
+                border-bottom: none;
+            }
+            
+            /* Header adjustments for proper spacing */
+            .header {
+                flex-direction: row; /* Keep logo and icon on one line */
+            }
+            
+            .button-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
 
     <header class="header">
-        <a href="https://detrafinal.flutterflow.app/" class="logo">DETRA</a>
-        <nav>
-            <a href="https://detrafinal.flutterflow.app/">DETRA homepage</a>
-            <a href="https://kejds.github.io/DETRA_SIGN/">Sign to Word</a>
-            <a href="https://zaewei.github.io/hackathonalphabet.github.io/">Sign to Alphabet</a>
-            <a href="https://zaewei.github.io/communitydetrapage/">Community</a>
-        </nav>
+        <div class="header-left">
+            <a href="https://detrafinal.flutterflow.app/" class="home-icon" title="Go to Homepage">
+                <i class="fas fa-home"></i>
+            </a>
+            <a href="https://detrafinal.flutterflow.app/" class="logo">DETRA</a>
+        </div>
+
+
+
+
     </header>
 
     <div class="content-section">
@@ -240,11 +325,11 @@
             <h3 id="question-text" style="font-size: 1.5em; color: #2c3e50; margin-bottom: 20px;">What does this sign mean?</h3>
 
             <div id="options-container">
-                </div>
-            
+            </div>
+
             <button id="next-button" onclick="loadNextQuestion()">Next Question</button>
             <button id="start-button" class="option-button" onclick="startQuiz()">Start Quiz</button>
-            
+
             <button id="reload-button" style="display: none;" onclick="window.location.reload()">Play Again</button>
 
         </div>
@@ -295,13 +380,13 @@
             "thank you": "images/thankyou.gif",
             "i love you": "images/iloveyou.gif"
         };
-        
+
         // --- QUIZ VARIABLES ---
         let currentQuestionIndex = 0;
         let score = 0;
-        let quizQuestions = []; 
-        const MAX_QUESTIONS_PER_SESSION = 10; 
-        const ALL_WORDS = Object.keys(QUIZ_DATA); 
+        let quizQuestions = [];
+        const MAX_QUESTIONS_PER_SESSION = 10;
+        const ALL_WORDS = Object.keys(QUIZ_DATA);
 
         // --- DOM Elements ---
         const signImage = document.getElementById('sign-image');
@@ -309,16 +394,15 @@
         const optionsContainer = document.getElementById('options-container');
         const nextButton = document.getElementById('next-button');
         const startButton = document.getElementById('start-button');
-        // Get the new button
-        const reloadButton = document.getElementById('reload-button'); 
+        const reloadButton = document.getElementById('reload-button');
         const scoreStatus = document.getElementById('score-status');
         const questionText = document.getElementById('question-text');
-        
+
         // Create statusDiv globally
-        const statusDiv = document.createElement('p'); 
+        const statusDiv = document.createElement('p');
         statusDiv.id = 'statusDiv';
 
-        // --- HELPER FUNCTIONS ---
+        // --- HELPER FUNCTIONS (Quiz Logic) ---
 
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
@@ -326,50 +410,42 @@
                 [array[i], array[j]] = [array[j], array[i]];
             }
         }
-        
+
         function capitalizeFirstLetter(string) {
-             return string.split(' ').map(word => 
-                 word.charAt(0).toUpperCase() + word.slice(1)
-             ).join(' ');
+            return string.split(' ').map(word =>
+                word.charAt(0).toUpperCase() + word.slice(1)
+            ).join(' ');
         }
 
-
-        // --- QUIZ LOGIC ---
-        
         function initializeQuizDisplay() {
             questionText.textContent = "Press 'Start Quiz' to begin!";
             scoreStatus.textContent = 'Score: 0/0';
             signImage.style.display = 'none';
             placeholderText.style.display = 'block';
-            
-            // Show original Start button, hide all others
+
             nextButton.style.display = 'none';
-            startButton.style.display = 'block'; 
-            reloadButton.style.display = 'none'; // Ensure new button is hidden
-            
+            startButton.style.display = 'block';
+            reloadButton.style.display = 'none';
+
             startButton.textContent = 'Start Quiz';
-            optionsContainer.classList.remove('options-inactive'); 
+            optionsContainer.classList.remove('options-inactive');
             optionsContainer.innerHTML = '';
             statusDiv.textContent = 'Click Start Quiz to begin the session!';
         }
 
         function startQuiz() {
-            // 1. Reset quiz state
             shuffleArray(ALL_WORDS);
-            quizQuestions = ALL_WORDS.slice(0, MAX_QUESTIONS_PER_SESSION); 
-            
+            quizQuestions = ALL_WORDS.slice(0, MAX_QUESTIONS_PER_SESSION);
+
             currentQuestionIndex = 0;
             score = 0;
-            
-            // 2. Control button visibility
+
             startButton.style.display = 'none';
-            nextButton.style.display = 'none'; 
-            reloadButton.style.display = 'none'; // Ensure new button is hidden
-            
-            // Bring options container back into flow
+            nextButton.style.display = 'none';
+            reloadButton.style.display = 'none';
+
             optionsContainer.classList.remove('options-inactive');
-            
-            // 3. Load the first question
+
             loadNextQuestion();
         }
 
@@ -381,17 +457,17 @@
 
             const currentWord = quizQuestions[currentQuestionIndex];
             const imageURL = QUIZ_DATA[currentWord];
-            
+
             signImage.src = imageURL;
             signImage.style.display = 'block';
             placeholderText.style.display = 'none';
 
             const correctOption = currentWord;
-            
+
             const incorrectOptions = ALL_WORDS.filter(word => word !== correctOption);
             shuffleArray(incorrectOptions);
             const selectedIncorrect = incorrectOptions.slice(0, 3);
-            
+
             let options = [correctOption, ...selectedIncorrect];
             shuffleArray(options);
 
@@ -399,14 +475,14 @@
             options.forEach(option => {
                 const button = document.createElement('button');
                 button.classList.add('option-button');
-                button.textContent = capitalizeFirstLetter(option); 
+                button.textContent = capitalizeFirstLetter(option);
                 button.onclick = () => checkAnswer(button, option, correctOption);
                 button.disabled = false;
                 optionsContainer.appendChild(button);
             });
-            
+
             updateScoreStatus();
-            nextButton.style.display = 'none'; 
+            nextButton.style.display = 'none';
             questionText.textContent = `Question ${currentQuestionIndex + 1} of ${MAX_QUESTIONS_PER_SESSION}: What does this sign mean?`;
             statusDiv.textContent = 'Select your answer below.';
         }
@@ -429,33 +505,29 @@
                 statusDiv.textContent = `❌ Incorrect. The answer was "${capitalizeFirstLetter(correctAnswer)}".`;
             }
 
-            nextButton.style.display = 'block'; 
-            
+            nextButton.style.display = 'block';
+
             currentQuestionIndex++;
             updateScoreStatus();
         }
 
         function updateScoreStatus() {
-            const questionsAttempted = currentQuestionIndex; 
+            const questionsAttempted = currentQuestionIndex;
             scoreStatus.textContent = `Score: ${score}/${questionsAttempted}`;
         }
 
         function endQuiz() {
-            signImage.style.display = 'none'; 
-            placeholderText.style.display = 'block'; 
+            signImage.style.display = 'none';
+            placeholderText.style.display = 'block';
             optionsContainer.innerHTML = '';
             questionText.textContent = `Quiz Finished!`;
             scoreStatus.textContent = `Final Score: ${score} out of ${MAX_QUESTIONS_PER_SESSION}`;
-            
-            // Hide all quiz navigation elements
+
             nextButton.style.display = 'none';
             startButton.style.display = 'none';
-            
-            // SHOW THE DEDICATED RELOAD BUTTON
-            reloadButton.style.display = 'block'; 
+            reloadButton.style.display = 'block';
 
-            // Physically remove options container footprint
-            optionsContainer.classList.add('options-inactive'); 
+            optionsContainer.classList.add('options-inactive');
 
             let message = "";
             if (score === MAX_QUESTIONS_PER_SESSION) {
@@ -470,15 +542,16 @@
 
         // Initial setup on page load
         document.addEventListener('DOMContentLoaded', () => {
-             const quizArea = document.getElementById('quiz-area');
-             const nextBtn = document.getElementById('next-button');
-             
-             // Ensure statusDiv is added to the DOM right before the next button
-             if (quizArea && nextBtn) {
-                 quizArea.insertBefore(statusDiv, nextBtn); 
-             }
-             initializeQuizDisplay();
+            const quizArea = document.getElementById('quiz-area');
+            const nextBtn = document.getElementById('next-button');
+
+            if (quizArea && nextBtn) {
+                quizArea.insertBefore(statusDiv, nextBtn);
+            }
+            initializeQuizDisplay();
         });
+
+        // JAVASCRIPT FOR BURGER TOGGLE
 
     </script>
 
